@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
 use App\Http\Middleware\AdminSignIn;
 use App\Http\Middleware\AdminSignOut;
 use Illuminate\Support\Facades\Route;
@@ -32,12 +33,14 @@ Route::group(['prefix' => 'admin'], function (){
 
         // Products
         Route::get('/products', [ProductController::class, 'index'])->name('products');
+        Route::post('/products', [ProductController::class, 'get_products'])->name('get_products');
+        Route::get('/product/{category}/{sub_category}', [ProductController::class, 'products_category'])->name('products_category');
         Route::get('/add/product', [ProductController::class, 'create'])->name('create_product');
         Route::post('/add/product', [ProductController::class, 'store'])->name('store_product');
         Route::get('/edit/product/{product}', [ProductController::class, 'edit'])->name('edit_product');
         Route::put('/edit/product/{product}', [ProductController::class, 'update'])->name('update_product');
         Route::get('/delete/product/{product}', [ProductController::class, 'destroy'])->name('destroy_product');
-        
+
         // Sign Out
         Route::get('/logout', [UserController::class, 'logout'])->name('admin_logout');
     });

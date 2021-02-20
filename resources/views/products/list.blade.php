@@ -1,13 +1,13 @@
-@extends('admin.app')
+@extends('app')
 
 @section('title', 'Products List')
 
 @section('head')
-@include('admin.links.table.head')
+@include('links.table.head')
 @endsection
 
 @section('foot')
-@include('admin.links.table.foot')
+@include('links.table.foot')
 @endsection
 
 @section('content-header')
@@ -20,8 +20,6 @@
                 <div class="breadcrumb-wrapper">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{  route('products') }}">Home</a>
-                        </li>
-                        <li class="breadcrumb-item"><a href="{{ route('create_product') }}">Add Product</a>
                         </li>
                     </ol>
                 </div>
@@ -45,55 +43,60 @@
 @endsection
 
 @section('content-body')
-<!-- Basic Tables start -->
-<div class="row" id="basic-table">
-    <div class="col-12">
-        <div class="card">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>S/N</th>
-                            <th>Title</th>
-                            <th>Price</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($products as $key=>$product)
-                        <tr>
-                            <td>{{ $key + 1 }}</td>
-                            <td>{{ $product->title }}</td>
-                            <td>{{ $product->price }}</td>
-                            <td>
-                                <div class="dropdown">
-                                    <button type="button" class="btn btn-sm dropdown-toggle hide-arrow"
-                                        data-toggle="dropdown">
-                                        <i data-feather="more-vertical"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item btn btn-secondary mb-1" href="{{ route('edit_product', ['product' => $product->id]) }}">
-                                            <i data-feather="edit-2" class="mr-50"></i>
-                                            <span>Edit</span>
-                                        </a>
-                                        <a class="dropdown-item btn btn-danger" href="{{ route('destroy_product', ['product' => $product->id]) }}">
-                                            <i data-feather="trash" class="mr-50"></i>
-                                            <span>Delete</span>
-                                        </a>
+    <!-- Basic multiple Column Form section start -->
+    <section id="multiple-column-form">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Select Product Category</h4>
+                    </div>
+                    <div class="card-body">
+                        <form class="form" method="post" action="{{ url()->full() }}">
+                            @csrf
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-6">
+                                    <div class="form-group"> 
+                                        <label for="first-name-column">Category 
+                                            @error('category')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </label>
+                                        <select name="category" id="category" class="form-control">
+                                            <option value="">Select Product Category</option>
+                                            @foreach($categories as $key=>$category)
+                                                <option value="{{ $key }}">{{ $key }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                                @foreach($categories as $key=>$category)
+                                    <div class="col-sm-12 col-md-12 col-lg-6 list-product" product-category="{{ $key }}">
+                                        <div class="form-group"> 
+                                            <label for="first-name-column">Sub Category 
+                                                @error('sub_category')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </label>
+                                            <select name="sub_category" id="" class="form-control">
+                                                <option value="">Select {{ $key }} sub category</option>
+                                                @foreach($categories[$key] as $sub_category)
+                                                    <option value="{{ $sub_category }}">{{ $sub_category }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                @endforeach
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary mr-1">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            
-            {{ $products->onEachSide(5)->links() }}
         </div>
-    </div>
-</div>
-<!-- Basic Tables end -->
-
+    </section>
+    <!-- Basic Floating Label Form section end -->
 
 @endsection

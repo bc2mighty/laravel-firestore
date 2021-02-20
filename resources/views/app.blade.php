@@ -36,7 +36,7 @@
     </div>
     <!-- END: Content-->
     @yield('foot')
-    <script src="{{ asset('hms/js/main.js') }}"></script>
+    <script src="{{ asset('dashboard/assets/js/main.js') }}"></script>
   </body>
   <!-- END: Body-->
 </html>
