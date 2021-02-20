@@ -1,0 +1,114 @@
+:root {
+    --first-bg-color: #798aa6;
+    --second-bg-color: #1b6675;
+    --third-bg-color: #b5363f;
+    --fourth-bg-color: #61254d;
+    --fifth-bg-color: #3d1410;
+    --sixth-bg-color: #797a36;
+    --seventh-bg-color: #28381f;
+    --eight-bg-color: #27595e;
+    --ninth-bg-color: #4b215c;
+    --tenth-bg-color: #66043a;
+}
+
+.horizontal-menu .header-navbar.navbar-horizontal ul#main-menu-navigation>li.active>a{
+	background: linear-gradient(118deg,#000,rgba(0, 0, 0, .7));
+	box-shadow: none;
+}
+
+.brand-logo{
+	background-image: url(../../../hms/images/Bayview\ hotels-09.png);
+    background-size: contain;
+    height: 90px;
+    width: 120px;
+    background-repeat: no-repeat;
+}
+
+.brand-logo-login{
+	background-image: url(../../../hms/images/Bayview\ hotels-09.png);
+    background-size: contain;
+    height: 100px;
+    width: 150px;
+    background-repeat: no-repeat;
+}
+
+a.link-color {
+    color: #a06f34;
+}
+
+.list-group-item.active, .list-group-item.active:hover{
+    background-color: black;
+    border-color: black;
+}
+
+.list-group.room-category-list-group{
+    display: none;
+}
+
+.fc-toolbar-chunk:last-child{
+    display: none;
+}
+
+.badge-click {
+    cursor: pointer;
+}
+
+.fc-daygrid-day-frame.fc-scrollgrid-sync-inner, .fc-daygrid-day-frame {
+    pointer-events: all;
+}
+
+.design-product {
+    font-size: 45px;
+    text-align: center;
+    height: 100px;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    width: 100px;
+    color: #fff;
+    margin: 0 auto;
+}
+
+.design-product.design-product-1 {
+    background-color: var(--first-bg-color);
+}
+
+.design-product.design-product-2 {
+    background-color: var(--second-bg-color);
+}
+
+.design-product.design-product-3 {
+    background-color: var(--third-bg-color);
+}
+
+.design-product.design-product-4 {
+    background-color: var(--fourth-bg-color);
+}
+
+.design-product.design-product-5 {
+    background-color: var(--fifth-bg-color);
+}
+
+.design-product.design-product-6 {
+    background-color: var(--sixth-bg-color);
+}
+
+.design-product.design-product-7 {
+    background-color: var(--seventh-bg-color);
+}
+
+.design-product.design-product-8 {
+    background-color: var(--eight-bg-color);
+}
+
+.design-product.design-product-9 {
+    background-color: var(--ninth-bg-color);
+}
+
+.design-product.design-product-0 {
+    background-color: var(--tenth-bg-color);
+}
+
+#print-sales {
+    pointer-events: none;
+}
