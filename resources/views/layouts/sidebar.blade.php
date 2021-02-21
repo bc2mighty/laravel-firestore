@@ -30,6 +30,12 @@
               </li>
             </ul>
           </li>
+          <li class="{{ $active_link == 'dispatchers' ? 'active ' : '' }}nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="package"></i><span class="menu-title text-truncate" data-i18n="Dispatchers">Dispatchers</span></a>
+            <ul class="menu-content">
+              <li><a class="d-flex align-items-center" href="{{ route('dispatchers') }}"><i data-feather="list"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
+              </li>
+            </ul>
+          </li>
           <li class="{{ $active_link == 'users' ? 'active ' : '' }}nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="package"></i><span class="menu-title text-truncate" data-i18n="Users">Users</span></a>
             <ul class="menu-content">
               <li><a class="d-flex align-items-center" href="{{ route('users') }}"><i data-feather="list"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>

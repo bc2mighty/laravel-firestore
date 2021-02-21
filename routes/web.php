@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DispatcherController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
@@ -49,6 +50,14 @@ Route::group(['prefix' => 'admin'], function (){
         Route::get('/edit/user/{id}', [UserController::class, 'edit'])->name('edit_user');
         Route::put('/edit/user/{id}', [UserController::class, 'update'])->name('update_user');
         Route::get('/delete/user/{id}', [UserController::class, 'destroy'])->name('destroy_user');
+
+        // Products
+        Route::get('/dispatchers', [DispatcherController::class, 'index'])->name('dispatchers');
+        Route::get('/add/dispatcher', [DispatcherController::class, 'create'])->name('create_dispatcher');
+        Route::post('/add/dispatcher', [DispatcherController::class, 'store'])->name('store_dispatcher');
+        Route::get('/edit/dispatcher/{id}', [DispatcherController::class, 'edit'])->name('edit_dispatcher');
+        Route::put('/edit/dispatcher/{id}', [DispatcherController::class, 'update'])->name('update_dispatcher');
+        Route::get('/delete/dispatcher/{id}', [DispatcherController::class, 'destroy'])->name('destroy_dispatcher');
 
         // Orders
         Route::get('/orders', [OrderController::class, 'index'])->name('orders');
