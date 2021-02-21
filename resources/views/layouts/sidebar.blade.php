@@ -28,8 +28,6 @@
             <ul class="menu-content">
               <li><a class="d-flex align-items-center" href="{{ route('products') }}"><i data-feather="list"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
               </li>
-              <li><a class="d-flex align-items-center" href="{{ route('create_product') }}"><i data-feather="plus"></i><span class="menu-item text-truncate" data-i18n="Preview">Add</span></a>
-              </li>
             </ul>
           </li>
           <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('admin_logout') }}"><i data-feather="log-out"></i><span class="menu-title text-truncate" data-i18n="Logout">Logout</span></a>

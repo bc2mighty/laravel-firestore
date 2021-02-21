@@ -21,7 +21,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{  route('products') }}">Home</a>
                         </li>
-                        <li class="breadcrumb-item"><a href="{{ route('create_product') }}">Add Product</a>
+                        <li class="breadcrumb-item"><a href="{{ route('create_product', ['category' => $category, 'sub_category' => $sub_category]) }}">Add Product</a>
                         </li>
                     </ol>
                 </div>
@@ -61,29 +61,31 @@
                     </thead>
                     <tbody>
                         @foreach($products as $key=>$product)
-                        <tr>
-                            <td>{{ $key + 1 }}</td>
-                            <td>{{ $product['cloth'] }}</td>
-                            <td>{{ $product['price'] }}</td>
-                            <td>
-                                <div class="dropdown">
-                                    <button type="button" class="btn btn-sm dropdown-toggle hide-arrow"
-                                        data-toggle="dropdown">
-                                        <i data-feather="more-vertical"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item btn btn-secondary mb-1" href="{{ route('edit_product', ['product' => $product['id']]) }}">
-                                            <i data-feather="edit-2" class="mr-50"></i>
-                                            <span>Edit</span>
-                                        </a>
-                                        <a class="dropdown-item btn btn-danger" href="{{ route('destroy_product', ['product' => $product['id']]) }}">
-                                            <i data-feather="trash" class="mr-50"></i>
-                                            <span>Delete</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                            @if($product->exists())
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $product['cloth'] }}</td>
+                                    <td>{{ $product['price'] }}</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn btn-sm dropdown-toggle hide-arrow"
+                                                data-toggle="dropdown">
+                                                <i data-feather="more-vertical"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item btn btn-secondary mb-1" href="{{ route('edit_product', ['product' => $product->id(), 'category' => $category, 'sub_category' => $sub_category]) }}">
+                                                    <i data-feather="edit-2" class="mr-50"></i>
+                                                    <span>Edit</span>
+                                                </a>
+                                                <a class="dropdown-item btn btn-danger" href="{{ route('destroy_product', ['product' => $product->id(), 'category' => $category, 'sub_category' => $sub_category]) }}">
+                                                    <i data-feather="trash" class="mr-50"></i>
+                                                    <span>Delete</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>

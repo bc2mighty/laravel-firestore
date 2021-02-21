@@ -55,7 +55,7 @@
                         <form class="form" method="post" action="{{ url()->full() }}">
                             @csrf
                             <div class="row">
-                                <div class="col-sm-12 col-md-12 col-lg-6">
+                                <div class="col-sm-12 col-md-12 col-lg-6 category-class">
                                     <div class="form-group"> 
                                         <label for="first-name-column">Category 
                                             @error('category')
@@ -70,23 +70,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                @foreach($categories as $key=>$category)
-                                    <div class="col-sm-12 col-md-12 col-lg-6 list-product" product-category="{{ $key }}">
-                                        <div class="form-group"> 
-                                            <label for="first-name-column">Sub Category 
-                                                @error('sub_category')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </label>
-                                            <select name="sub_category" id="" class="form-control">
-                                                <option value="">Select {{ $key }} sub category</option>
-                                                @foreach($categories[$key] as $sub_category)
-                                                    <option value="{{ $sub_category }}">{{ $sub_category }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                @endforeach
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-primary mr-1">Submit</button>
                                 </div>

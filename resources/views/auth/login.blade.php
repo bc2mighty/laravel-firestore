@@ -93,7 +93,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </label>
-            <input type="text" autocomplete="off" class="form-control" id="login-email" name="email" placeholder="john@example.com">
+            <input type="text" autocomplete="off" class="form-control" id="login-email" name="email" value="{{ old('email') }}" placeholder="john@example.com">
           </div>
 
           <div class="form-group mb-3">
