@@ -65,7 +65,7 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $product['cloth'] }}</td>
-                                    <td>{{ $product['price'] }}</td>
+                                    <td>@money($product['price'])</td>
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn btn-sm dropdown-toggle hide-arrow"
@@ -73,11 +73,11 @@
                                                 <i data-feather="more-vertical"></i>
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item btn btn-secondary mb-1" href="{{ route('edit_product', ['product' => $product->id(), 'category' => $category, 'sub_category' => $sub_category]) }}">
+                                                <a class="dropdown-item btn btn-secondary mb-1" href="{{ route('edit_product', ['id' => $product->id(), 'category' => $category, 'sub_category' => $sub_category]) }}">
                                                     <i data-feather="edit-2" class="mr-50"></i>
                                                     <span>Edit</span>
                                                 </a>
-                                                <a class="dropdown-item btn btn-danger" href="{{ route('destroy_product', ['product' => $product->id(), 'category' => $category, 'sub_category' => $sub_category]) }}">
+                                                <a class="dropdown-item btn btn-danger" href="{{ route('destroy_product', ['id' => $product->id(), 'category' => $category, 'sub_category' => $sub_category]) }}">
                                                     <i data-feather="trash" class="mr-50"></i>
                                                     <span>Delete</span>
                                                 </a>

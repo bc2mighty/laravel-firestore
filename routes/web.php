@@ -37,9 +37,9 @@ Route::group(['prefix' => 'admin'], function (){
         Route::get('/product/{category}/{sub_category}', [ProductController::class, 'products_category'])->name('products_category');
         Route::get('/add/product/{category}/{sub_category}', [ProductController::class, 'create'])->name('create_product');
         Route::post('/add/product/{category}/{sub_category}', [ProductController::class, 'store'])->name('store_product');
-        Route::get('/edit/product/{product}', [ProductController::class, 'edit'])->name('edit_product');
-        Route::put('/edit/product/{product}', [ProductController::class, 'update'])->name('update_product');
-        Route::get('/delete/product/{product}', [ProductController::class, 'destroy'])->name('destroy_product');
+        Route::get('/edit/product/{id}/{category}/{sub_category}', [ProductController::class, 'edit'])->name('edit_product');
+        Route::put('/edit/product/{id}/{category}/{sub_category}', [ProductController::class, 'update'])->name('update_product');
+        Route::get('/delete/product/{id}/{category}/{sub_category}', [ProductController::class, 'destroy'])->name('destroy_product');
 
         // Sign Out
         Route::get('/logout', [UserController::class, 'logout'])->name('admin_logout');

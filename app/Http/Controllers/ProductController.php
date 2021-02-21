@@ -41,6 +41,15 @@ class ProductController extends Controller
         return view('products.add')->with(['active_link' => $this->active_link, 'category' => $category, 'sub_category' => $sub_category]);
     }
 
+    public function edit(Request $request, $id, $category, $sub_category)
+    {
+        $firestore = app('firebase.firestore');
+        $docRef = $firestore->database()->collection('product')->document($category)->collection($sub_category)->document($id);
+        $product = $docRef->snapshot();
+        
+        return view('products.edit')->with(['active_link' => $this->active_link, 'category' => $category, 'sub_category' => $sub_category, 'product' => $product]);
+    }
+
     public function store(Request $request, $category, $sub_category)
     {
         $request->validate([
@@ -79,13 +88,72 @@ class ProductController extends Controller
 
             $product = $firestore->database()->collection('product')->document($category)->collection($sub_category)->add($data);
             // dd($product);
-            return redirect()->route('products_category', ['category' => $category, 'sub_category' => $sub_category]);
+            return redirect()->route('products_category', ['category' => $category, 'sub_category' => $sub_category])->with('success', 'Products Created Successfully');
         } catch (Exception $e) {
             $message = $e->getMessage();
             $exploded = explode("_", $message);
             $imploded = strtolower(implode(" ", $exploded));
-            dd($message);
+            // dd($message);
             return redirect()->route('create_product', ['category' => $category, 'sub_category' => $sub_category])->with('danger', $imploded);
+        }
+    }
+
+    public function update(Request $request, $id, $category, $sub_category)
+    {
+        $request->validate([
+            'cloth' => 'required',
+            'price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+            'image' => 'file|max:2000|mimes:jpg,png,jpeg',
+        ]);
+
+        $data = [
+            'cloth' => $request->cloth,
+            'price' => $request->price,
+        ];
+
+        try {
+            $firestore = app('firebase.firestore');
+
+            if($request->file('image')) {
+                $storage = app('firebase.storage');
+                $defaultBucket = $storage->getBucket();
+                $image = $request->file('image');
+                $name = (string) Str::uuid().".".$image->getClientOriginalExtension();
+                $pathName = $image->getPathName();
+                $file = fopen($pathName, 'r');
+                $object = $defaultBucket->upload($file, [
+                    'name' => $name,
+                    'predefinedAcl' => 'publicRead'
+                ]);
+                $image_url = 'https://storage.googleapis.com/'.env('FIREBASE_PROJECT_ID').'.appspot.com/'.$name;
+                $data['image_url'] = $image_url;
+            }
+
+            $product = $firestore->database()->collection('product')->document($category)->collection($sub_category)->document($id)->set($data, ['merge' => true]);
+
+            return redirect()->route('products_category', ['category' => $category, 'sub_category' => $sub_category])->with('success', 'Product Updated Successfully');
+        } catch (Exception $e) {
+            $message = $e->getMessage();
+            $exploded = explode("_", $message);
+            $imploded = strtolower(implode(" ", $exploded));
+            // dd($message);
+            return redirect()->route('edit_product', ['id' => $id, 'category' => $category, 'sub_category' => $sub_category])->with('danger', $imploded);
+        }
+    }
+
+    public function destroy(Request $request, $id, $category, $sub_category)
+    {
+        try {
+            $firestore = app('firebase.firestore');
+            $firestore->database()->collection('product')->document($category)->collection($sub_category)->document($id)->delete();
+
+            return redirect()->route('products_category', ['category' => $category, 'sub_category' => $sub_category])->with('danger', 'Product Deleted Successfully');
+        } catch (Exception $e) {
+            $message = $e->getMessage();
+            $exploded = explode("_", $message);
+            $imploded = strtolower(implode(" ", $exploded));
+            // dd($message);
+            return redirect()->route('edit_product', ['id' => $id, 'category' => $category, 'sub_category' => $sub_category])->with('danger', $imploded);
         }
     }
 
