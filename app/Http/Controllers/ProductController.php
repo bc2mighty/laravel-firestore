@@ -153,7 +153,7 @@ class ProductController extends Controller
             $exploded = explode("_", $message);
             $imploded = strtolower(implode(" ", $exploded));
             // dd($message);
-            return redirect()->route('edit_product', ['id' => $id, 'category' => $category, 'sub_category' => $sub_category])->with('danger', $imploded);
+            return redirect()->route('products_category', ['category' => $category, 'sub_category' => $sub_category])->with('danger', $imploded);
         }
     }
 

@@ -41,6 +41,14 @@ Route::group(['prefix' => 'admin'], function (){
         Route::put('/edit/product/{id}/{category}/{sub_category}', [ProductController::class, 'update'])->name('update_product');
         Route::get('/delete/product/{id}/{category}/{sub_category}', [ProductController::class, 'destroy'])->name('destroy_product');
 
+        // Products
+        Route::get('/users', [UserController::class, 'users'])->name('users');
+        Route::get('/add/user', [UserController::class, 'create'])->name('create_user');
+        Route::post('/add/user', [UserController::class, 'store'])->name('store_user');
+        Route::get('/edit/user/{id}', [UserController::class, 'edit'])->name('edit_user');
+        Route::put('/edit/user/{id}', [UserController::class, 'update'])->name('update_user');
+        Route::get('/delete/user/{id}', [UserController::class, 'destroy'])->name('destroy_user');
+
         // Sign Out
         Route::get('/logout', [UserController::class, 'logout'])->name('admin_logout');
     });

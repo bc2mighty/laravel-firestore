@@ -24,9 +24,15 @@
           </li>
           <!-- <li class=" nav-item"><a class="d-flex align-items-center" href="app-email.html"><i data-feather="mail"></i><span class="menu-title text-truncate" data-i18n="Email">Email</span></a>
           </li> -->
-          <li class="{{ $active_link == 'products' ? 'active ' : '' }}nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="package"></i><span class="menu-title text-truncate" data-i18n="Services">Products</span></a>
+          <li class="{{ $active_link == 'products' ? 'active ' : '' }}nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="package"></i><span class="menu-title text-truncate" data-i18n="Products">Products</span></a>
             <ul class="menu-content">
               <li><a class="d-flex align-items-center" href="{{ route('products') }}"><i data-feather="list"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
+              </li>
+            </ul>
+          </li>
+          <li class="{{ $active_link == 'users' ? 'active ' : '' }}nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="package"></i><span class="menu-title text-truncate" data-i18n="Users">Users</span></a>
+            <ul class="menu-content">
+              <li><a class="d-flex align-items-center" href="{{ route('users') }}"><i data-feather="list"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
               </li>
             </ul>
           </li>
