@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Middleware\AdminSignIn;
@@ -48,6 +49,9 @@ Route::group(['prefix' => 'admin'], function (){
         Route::get('/edit/user/{id}', [UserController::class, 'edit'])->name('edit_user');
         Route::put('/edit/user/{id}', [UserController::class, 'update'])->name('update_user');
         Route::get('/delete/user/{id}', [UserController::class, 'destroy'])->name('destroy_user');
+
+        // Orders
+        Route::get('/orders', [OrderController::class, 'index'])->name('orders');
 
         // Sign Out
         Route::get('/logout', [UserController::class, 'logout'])->name('admin_logout');

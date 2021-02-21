@@ -36,6 +36,12 @@
               </li>
             </ul>
           </li>
+          <li class="{{ $active_link == 'orders' ? 'active ' : '' }}nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="package"></i><span class="menu-title text-truncate" data-i18n="Orders">Orders</span></a>
+            <ul class="menu-content">
+              <li><a class="d-flex align-items-center" href="{{ route('orders') }}"><i data-feather="list"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
+              </li>
+            </ul>
+          </li>
           <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('admin_logout') }}"><i data-feather="log-out"></i><span class="menu-title text-truncate" data-i18n="Logout">Logout</span></a>
           </li>
         </ul>
