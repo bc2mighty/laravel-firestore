@@ -4,6 +4,7 @@ use App\Http\Controllers\DispatcherController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CompanyInfoController;
 use App\Http\Middleware\AdminSignIn;
 use App\Http\Middleware\AdminSignOut;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,16 @@ Route::group(['prefix' => 'admin'], function (){
         Route::get('/edit/product/{id}/{category}/{sub_category}', [ProductController::class, 'edit'])->name('edit_product');
         Route::put('/edit/product/{id}/{category}/{sub_category}', [ProductController::class, 'update'])->name('update_product');
         Route::get('/delete/product/{id}/{category}/{sub_category}', [ProductController::class, 'destroy'])->name('destroy_product');
+
+        // Products
+        Route::get('/company_infos', [CompanyInfoController::class, 'index'])->name('company_infos');
+        Route::post('/company_infos', [CompanyInfoController::class, 'get_company_infos'])->name('get_company_infos');
+        Route::get('/company_info/{category}/{sub_category}', [CompanyInfoController::class, 'company_infos_category'])->name('company_infos_category');
+        Route::get('/add/company_info/{category}/{sub_category}', [CompanyInfoController::class, 'create'])->name('create_company_info');
+        Route::post('/add/company_info/{category}/{sub_category}', [CompanyInfoController::class, 'store'])->name('store_company_info');
+        Route::get('/edit/company_info/{id}/{category}/{sub_category}', [CompanyInfoController::class, 'edit'])->name('edit_company_info');
+        Route::put('/edit/company_info/{id}/{category}/{sub_category}', [CompanyInfoController::class, 'update'])->name('update_company_info');
+        Route::get('/delete/company_info/{id}/{category}/{sub_category}', [CompanyInfoController::class, 'destroy'])->name('destroy_company_info');
 
         // Products
         Route::get('/users', [UserController::class, 'users'])->name('users');
