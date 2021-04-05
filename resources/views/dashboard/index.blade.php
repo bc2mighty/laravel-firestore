@@ -32,7 +32,21 @@
                 </div>
             </div>
             
-            <div class="col-lg-3 col-sm-6 col-12">
+            <div class="col-lg-4 col-sm-6 col-12">
+                <div class="card pb-2">
+                    <div class="card-header flex-column align-items-start pb-0">
+                    <div class="avatar bg-light-primary p-50 m-0">
+                        <div class="avatar-content">
+                        <i data-feather="users" class="font-medium-5"></i>
+                        </div>
+                    </div>
+                    <h2 class="font-weight-bolder mt-1">{{ $users }}</h2>
+                    <p class="card-text">Total Users</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-sm-6 col-12">
                 <div class="card pb-2">
                     <div class="card-header flex-column align-items-start pb-0">
                     <div class="avatar bg-light-primary p-50 m-0">
@@ -40,13 +54,13 @@
                         <i data-feather="package" class="font-medium-5"></i>
                         </div>
                     </div>
-                    <h2 class="font-weight-bolder mt-1"></h2>
-                    <p class="card-text">Total Bookings</p>
+                    <h2 class="font-weight-bolder mt-1">{{ $products }}</h2>
+                    <p class="card-text">Total Products</p>
                     </div>
                 </div>
             </div>
             
-            <div class="col-lg-3 col-sm-6 col-12">
+            <div class="col-lg-4 col-sm-6 col-12">
                 <div class="card pb-2">
                     <div class="card-header flex-column align-items-start pb-0">
                     <div class="avatar bg-light-warning p-50 m-0">
@@ -54,40 +68,12 @@
                         <i data-feather="package" class="font-medium-5"></i>
                         </div>
                     </div>
-                    <h2 class="font-weight-bolder mt-1"></h2>
-                    <p class="card-text">Total Sales</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-3 col-sm-6 col-12">
-                <div class="card pb-2">
-                    <div class="card-header flex-column align-items-start pb-0">
-                    <div class="avatar bg-light-primary p-50 m-0">
-                        <div class="avatar-content">
-                        <i data-feather="credit-card" class="font-medium-5"></i>
-                        </div>
-                    </div>
-                    <h2 class="font-weight-bolder mt-1"></h2>
-                    <p class="card-text">Bookings Amount</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-3 col-sm-6 col-12">
-                <div class="card pb-2">
-                    <div class="card-header flex-column align-items-start pb-0">
-                    <div class="avatar bg-light-warning p-50 m-0">
-                        <div class="avatar-content">
-                        <i data-feather="credit-card" class="font-medium-5"></i>
-                        </div>
-                    </div>
-                    <h2 class="font-weight-bolder mt-1"></h2>
-                    <p class="card-text">Sales Amount</p>
+                    <h2 class="font-weight-bolder mt-1">{{ $orders }}</h2>
+                    <p class="card-text">Total Orders</p>
                     </div>
                 </div>
             </div>
         </div>
-
+        <a href="{{ route('syncDB') }}" id="sync_db" class="btn btn-primary">Sync Database</a>
     </section>
 @endsection

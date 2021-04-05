@@ -7,10 +7,30 @@ use Google\Cloud\Firestore\FirestoreClient;
 use Illuminate\Support\Str;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class UserController extends Controller
 {
     public $active_link = 'users';
+    public $categories = [
+        'irononly' => [
+            'kidsCloth',
+            'menCloth',
+            'womenCloth',
+        ],
+        'otherservices' => [
+            'otherservices',
+        ],
+        'washandiron' => [
+            'kidsCloth',
+            'menCloth',
+            'womenCloth',
+        ],
+        'washonly' => [
+            'menCloth',
+            'womenCloth',
+        ],
+    ];
 
     public function index() {
         try {
@@ -29,7 +49,68 @@ class UserController extends Controller
 
     public function dashboard(Request $request) {
         $active_link = 'dashboard';
-        return view('dashboard.index')->with(['active_link' => $active_link]);
+
+        $product_length = 0;
+        $firestore = app('firebase.firestore');
+
+        foreach($this->categories as $key=>$collections) {
+            foreach($collections as $collection){
+                $products = $firestore->database()->collection('product')->document($key)->collection($collection)->documents();
+                foreach($products as $key=>$product) {
+                    $product_length++;
+                }
+            }
+        }
+
+        $orders_length = 0;
+
+        $orders = $firestore->database()->collection('orders')->documents();
+
+        foreach($orders as $key=>$order) {
+            $orders_length++;
+        }
+
+        $users_length = 0;
+
+        $users = $firestore->database()->collection('users')->documents();
+
+        foreach($users as $key=>$user) {
+            $users_length++;
+        }
+
+        return view('dashboard.index')->with(['active_link' => $active_link, 'products' => $product_length, 'orders' => $orders_length, 'users' => $users_length]);
+    }
+
+    public function syncDB(Request $request) {
+        $firestore = app('firebase.firestore');
+
+        foreach($this->categories as $key=>$collections) {
+            foreach($collections as $collection){
+                $products = $firestore->database()->collection('product')->document($key)->collection($collection)->documents();
+                foreach($products as $key=>$product) {
+                    // dd($product);
+                    // $response = Http::post(env('CLEANCHECK_POST_PRODUCT_API_URL'), [
+                    //     'cloth' => $product['cloth'],
+                    //     'price' => $product['price'],
+                    //     'type' => $product['type'],
+                    //     'image' => $product['image'],
+                    // ]);
+
+                    $response = Http::asForm()->post(env('CLEANCHECK_POST_PRODUCT_API_URL'), [
+                        'cloth' => $product['cloth'],
+                        'price' => $product['price'],
+                        'type' => $product['type'],
+                        'image' => $product['image'],
+                        'category' => $key,
+                        'sub_category' => $collection,
+                    ])->throw(function ($response, $e) {
+                        dd($response->getBody()->getContents());
+                    })->json();
+                    
+                    dd($response);
+                }
+            }
+        }
     }
 
     public function submit_Login(Request $request) {

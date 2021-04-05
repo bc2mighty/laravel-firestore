@@ -35,6 +35,7 @@ Route::group(['prefix' => 'admin'], function (){
         Route::get('/dashboard', [UserController::class, 'dashboard'])->name('admin_dashboard');
 
         // Products
+        Route::get('/syncDB', [UserController::class, 'syncDB'])->name('syncDB');
         Route::get('/products', [ProductController::class, 'index'])->name('products');
         Route::post('/products', [ProductController::class, 'get_products'])->name('get_products');
         Route::get('/product/{category}/{sub_category}', [ProductController::class, 'products_category'])->name('products_category');
