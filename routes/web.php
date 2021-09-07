@@ -29,7 +29,7 @@ Route::group(['prefix' => 'admin'], function (){
         Route::get('/login', [UserController::class, 'login'])->name('login');
         Route::post('/login', [UserController::class, 'submit_Login']);
     });
-    
+
     Route::middleware([AdminSignIn::class])->group(function () {
         // Dashboard
         Route::get('/dashboard', [UserController::class, 'dashboard'])->name('admin_dashboard');
@@ -41,6 +41,7 @@ Route::group(['prefix' => 'admin'], function (){
         Route::get('/product/{category}/{sub_category}', [ProductController::class, 'products_category'])->name('products_category');
         Route::get('/add/product/{category}/{sub_category}', [ProductController::class, 'create'])->name('create_product');
         Route::post('/add/product/{category}/{sub_category}', [ProductController::class, 'store'])->name('store_product');
+        Route::post('/add/product/bulk/{category}/{sub_category}', [ProductController::class, 'store_bulk'])->name('store_bulk_product');
         Route::get('/edit/product/{id}/{category}/{sub_category}', [ProductController::class, 'edit'])->name('edit_product');
         Route::put('/edit/product/{id}/{category}/{sub_category}', [ProductController::class, 'update'])->name('update_product');
         Route::get('/delete/product/{id}/{category}/{sub_category}', [ProductController::class, 'destroy'])->name('destroy_product');

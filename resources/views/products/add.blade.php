@@ -47,8 +47,8 @@
                             @csrf
                             <div class="row">
                                 <div class="col-sm-12 col-md-12 col-lg-6">
-                                    <div class="form-group"> 
-                                        <label for="first-name-column">Cloth 
+                                    <div class="form-group">
+                                        <label for="first-name-column">Cloth
                                             @error('cloth')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -57,8 +57,8 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-12 col-lg-6">
-                                    <div class="form-group"> 
-                                        <label for="first-name-column">Price 
+                                    <div class="form-group">
+                                        <label for="first-name-column">Price
                                             @error('price')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -67,13 +67,40 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="form-group"> 
-                                        <label for="first-name-column">Upload Product Image 
+                                    <div class="form-group">
+                                        <label for="first-name-column">Upload Product Image
                                             @error('image')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </label>
                                         <input type="file" name="image" accept="image/*" value="{{ old('image') }}" class="form-control" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary mr-1">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Add Bulk Product</h4>
+                    </div>
+                    <div class="card-body">
+                        <form class="form" method="post" action="{{ route('store_bulk_product', ['category' => $category, 'sub_category' => $sub_category]) }}" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="first-name-column">Upload Product Excel File
+                                            @error('excel_file')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </label>
+                                        <input type="file" name="excel_file" accept=".xlsx, .xls, .csv" value="{{ old('excel_file') }}" class="form-control" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="col-12">

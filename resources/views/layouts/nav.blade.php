@@ -6,7 +6,7 @@
           <ul class="nav navbar-nav d-xl-none">
             <li class="nav-item"><a class="nav-link menu-toggle" href="javascript:void(0);"><i class="ficon" data-feather="menu"></i></a></li>
           </ul>
-          <h4>Hotel Management System</h4>
+          <h4>Clean Check Management System</h4>
         </div>
         <ul class="nav navbar-nav align-items-center ml-auto">
           <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

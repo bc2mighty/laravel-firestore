@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Google\Cloud\Storage\StorageClient;
+use App\Imports\ProductImport;
+use Excel;
 
 class ProductController extends Controller
 {
@@ -13,22 +16,29 @@ class ProductController extends Controller
 
     public $categories = [
         'irononly' => [
-            'kidsCloth',
-            'menCloth',
-            'womenCloth',
+            'kidsCloth' => 'Kids',
+            'menCloth' => 'Men',
+            'womenCloth' => 'Women',
         ],
         'otherservices' => [
-            'otherservices',
+            'otherservices' => 'OtherServices',
         ],
         'washandiron' => [
-            'kidsCloth',
-            'menCloth',
-            'womenCloth',
+            'kidsCloth' => 'Kids',
+            'menCloth' => 'Men',
+            'womenCloth' => 'Women',
         ],
         'washonly' => [
-            'menCloth',
-            'womenCloth',
+            'menCloth' => 'Men',
+            'womenCloth' => 'Kids',
         ],
+    ];
+
+    public $categories_texts = [
+        "washandiron" => "wash and iron",
+        "irononly" => "iron only",
+        "otherservices" => "OtherServices",
+        "washonly" => "Wash Only",
     ];
 
     public function index()
@@ -46,7 +56,7 @@ class ProductController extends Controller
         $firestore = app('firebase.firestore');
         $docRef = $firestore->database()->collection('product')->document($category)->collection($sub_category)->document($id);
         $product = $docRef->snapshot();
-        
+
         return view('products.edit')->with(['active_link' => $this->active_link, 'category' => $category, 'sub_category' => $sub_category, 'product' => $product]);
     }
 
@@ -60,8 +70,10 @@ class ProductController extends Controller
 
         $data = [
             'cloth' => $request->cloth,
-            'price' => $request->price,
+            'price' => (float) $request->price,
         ];
+        $data['type'] = $this->categories[$category][$sub_category];
+        $data['category'] = $this->categories_texts[$category];
 
         try {
             $firestore = app('firebase.firestore');
@@ -84,9 +96,9 @@ class ProductController extends Controller
             // );
             // dd($object, 'https://storage.googleapis.com/'.env('FIREBASE_PROJECT_ID').'.appspot.com/'.$name);
             $image_url = 'https://storage.googleapis.com/'.env('FIREBASE_PROJECT_ID').'.appspot.com/'.$name;
-            $data['image_url'] = $image_url;
+            $data['image'] = $image_url;
 
-            $product = $firestore->database()->collection('product')->document($category)->collection($sub_category)->add($data);
+            $product = $this->saveProduct($data, $category, $sub_category);
             // dd($product);
             return redirect()->route('products_category', ['category' => $category, 'sub_category' => $sub_category])->with('success', 'Products Created Successfully');
         } catch (Exception $e) {
@@ -96,6 +108,32 @@ class ProductController extends Controller
             // dd($message);
             return redirect()->route('create_product', ['category' => $category, 'sub_category' => $sub_category])->with('danger', $imploded);
         }
+    }
+
+    public function store_bulk(Request $request, $category, $sub_category)
+    {
+        $request->validate([
+            'excel_file' => 'required|file|max:5000|mimetypes:'.
+                'application/vnd.ms-office,'.
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,'.
+                'application/vnd.ms-excel',
+        ]);
+
+        $categories = [
+            "category" => Str::ucfirst($this->categories_texts[$category]),
+//            "sub_category" => $sub_category,
+            "type" => $this->categories[$category][$sub_category],
+        ];
+
+        $products = Excel::toArray(new ProductImport, $request->file('excel_file'));
+        $products = array_shift($products);
+        foreach ($products as $product) {
+            $product['cloth'] = $product['item'];
+            unset($product['item']);
+            $product = array_merge($product, $categories);
+            $result = $this->saveProduct($product, $category, $sub_category);
+        }
+        return redirect()->route('products_category', ['category' => $category, 'sub_category' => $sub_category])->with('success', 'Products Created Successfully');
     }
 
     public function update(Request $request, $id, $category, $sub_category)
@@ -108,7 +146,7 @@ class ProductController extends Controller
 
         $data = [
             'cloth' => $request->cloth,
-            'price' => $request->price,
+            'price' => (float) $request->price,
         ];
 
         try {
@@ -186,6 +224,12 @@ class ProductController extends Controller
             $imploded = strtolower(implode(" ", $exploded));
             return redirect()->route('login')->with('danger', $imploded);
         }
+    }
+
+    public function saveProduct($data, $category, $sub_category)
+    {
+        $firestore = app('firebase.firestore');
+        return $firestore->database()->collection('product')->document($category)->collection($sub_category)->add($data);
     }
 }
 
